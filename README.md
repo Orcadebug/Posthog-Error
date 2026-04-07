@@ -1,6 +1,6 @@
 # W-UX
 
-Browser session observability system. Ingests DOM events, network activity, and console output — produces root-cause hypotheses, timeline alignment, and Playwright verification scripts.
+W-UX watches what users do in your app and figures out why things break. It records clicks, network requests, and page changes in the browser, then runs that data through a pipeline that detects issues like blocked buttons or rage clicks, reasons about the root cause using an LLM, and generates Playwright tests to verify the problem.
 
 ## Quick Start
 
