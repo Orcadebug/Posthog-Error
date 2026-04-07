@@ -17,22 +17,48 @@ export function identifyNavigationPath(moments: Moment[]): string[] {
   return path
 }
 
-export function extractKeyInteractions(moments: Moment[]): Array<{
+export interface KeyInteraction {
   ts: number
   type: string
   description: string
-}> {
-  const interactions: Array<{ ts: number; type: string; description: string }> = []
+  technicalState?: {
+    cssBlockerState?: Record<string, unknown>
+    elementFromPointMismatch?: boolean
+    elementAtPointSelector?: string
+  }
+}
+
+export function extractKeyInteractions(moments: Moment[]): KeyInteraction[] {
+  const interactions: KeyInteraction[] = []
   
   for (const moment of moments) {
     for (const event of moment.events) {
       if (event.modality === 'user-interaction' && event.subtype === 'click') {
         const payload = event.payload as Record<string, unknown>
-        interactions.push({
+        
+        // Extract CSS blocker state from event
+        const cssBlockerState = event.cssBlockerState as Record<string, unknown> | undefined
+        
+        // Extract elementFromPoint information if available
+        const elementFromPointMismatch = payload.elementFromPointMismatch as boolean | undefined
+        const elementAtPointSelector = payload.elementAtPointSelector as string | undefined
+        
+        const interaction: KeyInteraction = {
           ts: event.ts,
           type: 'click',
           description: `Click on ${payload.selector || 'unknown element'}`,
-        })
+        }
+        
+        // Add technical state if any CSS-related data exists
+        if (cssBlockerState || elementFromPointMismatch !== undefined) {
+          interaction.technicalState = {
+            cssBlockerState,
+            elementFromPointMismatch,
+            elementAtPointSelector,
+          }
+        }
+        
+        interactions.push(interaction)
       }
     }
   }

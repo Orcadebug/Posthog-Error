@@ -27,6 +27,8 @@ export const TimelineEventSchema = z.object({
 export type TimelineEvent = z.infer<typeof TimelineEventSchema>
 export const IngestEventsRequestSchema = z.object({
   sessionId: z.string().uuid(),
-  events: z.array(TimelineEventSchema.omit({ id: true, sessionId: true }).partial({ id: true })),
+  events: z.array(TimelineEventSchema.omit({ id: true, sessionId: true }).extend({
+    id: z.string().uuid().optional(),
+  })),
 })
 export type IngestEventsRequest = z.infer<typeof IngestEventsRequestSchema>

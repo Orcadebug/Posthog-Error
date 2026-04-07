@@ -1,0 +1,27 @@
+{
+  "name": "@w-ux/api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs --external @fastify/cors --external fastify --external bullmq --external ioredis --external pg",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fastify/cors": "^9.0.0",
+    "@w-ux/shared-types": "workspace:*",
+    "bullmq": "^5.8.0",
+    "fastify": "^4.28.0",
+    "ioredis": "^5.4.0",
+    "pg": "^8.11.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/uuid": "^9.0.0",
+    "tsx": "^4.15.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0"
+  }
+}

@@ -27,6 +27,27 @@ describe('HypothesisSchema', () => {
     const h = { id:'550e8400-e29b-41d4-a716-446655440000', sessionId:'550e8400-e29b-41d4-a716-446655440001', title:'Blocked CTA', description:'Submit button was not clickable', category:'blocked-cta', confidence:0.95, evidenceIds:['evt-1','evt-2'], verifierStatus:'pending', createdAt:Date.now() }
     expect(() => HypothesisSchema.parse(h)).not.toThrow()
   })
+  it('validates hypothesis with metadata', () => {
+    const h = { 
+      id:'550e8400-e29b-41d4-a716-446655440000', 
+      sessionId:'550e8400-e29b-41d4-a716-446655440001', 
+      title:'Blocked CTA', 
+      description:'Submit button was not clickable', 
+      category:'blocked-cta', 
+      confidence:0.95, 
+      evidenceIds:['evt-1','evt-2'], 
+      metadata: {
+        cssBlockerState: {
+          pointerEvents: 'none',
+          overlappingElements: [{ tag: 'div', className: 'modal-overlay' }]
+        },
+        blockingReasons: ['pointer-events: none', 'modal overlay detected']
+      },
+      verifierStatus:'pending', 
+      createdAt:Date.now() 
+    }
+    expect(() => HypothesisSchema.parse(h)).not.toThrow()
+  })
   it('rejects confidence out of range', () => {
     const h = { id:'550e8400-e29b-41d4-a716-446655440000', sessionId:'550e8400-e29b-41d4-a716-446655440001', title:'Test', description:'Test', category:'blocked-cta', confidence:1.5, evidenceIds:[], verifierStatus:'pending', createdAt:Date.now() }
     expect(() => HypothesisSchema.parse(h)).toThrow()

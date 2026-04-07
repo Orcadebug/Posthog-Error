@@ -66,6 +66,7 @@ export class DetectionPipeline {
       evidenceIds: result.evidenceIds,
       suspectedFiles: result.metadata?.suspectedFiles as string[] | undefined,
       suspectedComponents: result.metadata?.suspectedComponents as string[] | undefined,
+      metadata: result.metadata,
       verifierStatus: 'pending',
       createdAt: now,
     }))

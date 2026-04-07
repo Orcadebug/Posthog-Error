@@ -13,6 +13,7 @@ export const HypothesisSchema = z.object({
   evidenceIds: z.array(z.string()),
   suspectedFiles: z.array(z.string()).optional(),
   suspectedComponents: z.array(z.string()).optional(),
+  metadata: z.record(z.unknown()).optional(),
   verifierStatus: VerifierStatusEnum.default('pending'),
   createdAt: z.number().int().positive(),
 })

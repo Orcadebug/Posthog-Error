@@ -1,5 +1,16 @@
 import type { TimelineEvent } from '@w-ux/shared-types'
 
+/**
+ * @deprecated Use PostHogTransport instead. BatchTransport is kept for backward compatibility
+ * during development or for users who want to run without PostHog.
+ * 
+ * This transport sends events directly to the W-UX API using custom batching logic.
+ * PostHogTransport is recommended for production use as it provides:
+ * - Automatic batching and retry logic
+ * - Built-in sendBeacon support for page unload
+ * - Session replay and analytics
+ * - Better observability and debugging tools
+ */
 export class BatchTransport {
   private queue: TimelineEvent[] = []
   private flushTimer: ReturnType<typeof setTimeout> | null = null

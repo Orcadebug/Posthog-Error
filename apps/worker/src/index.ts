@@ -49,8 +49,8 @@ const detectIssuesWorker = new Worker(
     
     for (const hypothesis of hypotheses) {
       await db.query(
-        `INSERT INTO hypotheses (id, session_id, title, description, category, confidence, evidence_ids, suspected_files, suspected_components, verifier_status, created_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+        `INSERT INTO hypotheses (id, session_id, title, description, category, confidence, evidence_ids, suspected_files, suspected_components, metadata, verifier_status, created_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
         [
           hypothesis.id,
           hypothesis.sessionId,
@@ -61,6 +61,7 @@ const detectIssuesWorker = new Worker(
           hypothesis.evidenceIds,
           hypothesis.suspectedFiles || null,
           hypothesis.suspectedComponents || null,
+          hypothesis.metadata ? JSON.stringify(hypothesis.metadata) : null,
           hypothesis.verifierStatus,
           hypothesis.createdAt,
         ]
