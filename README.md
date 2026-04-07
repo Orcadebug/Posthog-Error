@@ -1,6 +1,5 @@
 # W-UX: Multi-Modal Semantic Alignment for AI Observability
 
-**Repository:** [Orcadebug/W-UX](https://github.com/Orcadebug/W-UX)
 
 A comprehensive observability system that ingests browser sessions (DOM, events, network, console, replay frames) and produces semantic timelines, root-cause hypotheses, intent-gap analysis, and code localization.
 
